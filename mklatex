@@ -1,0 +1,71 @@
+#!/bin/bash
+
+#テンプレートファイル
+template="/Users/hsrmy/Library/TeXShop/Templates/MyTemplate.tex"
+
+destination=$1
+file=$(basename ${destination})
+folder=$(dirname ${destination})
+CMDNAME=$(basename $0)
+PATH=$PATH
+
+exec_cmd() {
+  echo "\$$1"
+  $1
+}
+
+exec_latex(){
+  cd $1
+  echo -e "\033[0;32mOpenning \"$3\".\033[0:39m"
+  /usr/bin/open -a Atom $2
+  /bin/stty intr ^Z
+  echo -e "\033[0;32mUse ctrl-Z to stop,For stop latexmk.\033[0;39m"
+  exec_cmd "/Library/TeX/texbin/latexmk -pvc $2"
+  /bin/stty sane
+}
+
+example(){
+cat << 'EOS'
+#!/usr/bin/env perl
+$latex            = 'platex -synctex=1 -halt-on-error';
+$latex_silent     = 'platex -synctex=1 -halt-on-error -interaction=batchmode';
+$bibtex           = 'pbibtex';
+$dvipdf           = 'dvipdfmx %O -o %D %S';
+$makeindex        = 'mendex %O -o %D %S';
+$max_repeat       = 5;
+$pdf_mode	  = 3; # generates pdf via dvipdfmx
+
+# Prevent latexmk from removing PDF after typeset.
+# This enables Skim to chase the update in PDF automatically.
+$pvc_view_file_via_temporary = 0;
+
+# Use Skim as a previewer
+#$pdf_update_method = 4;
+$pdf_previewer    = "open -a /Applications/Preview.app";
+
+EOS
+}
+
+if [ $# -ne 1 ]; then
+  echo "Usage: ${CMDNAME} [Path to Folder]"
+  exit 1
+else
+  if [ ! -f "${HOME}/.latexmkrc" ]; then
+    echo -e "\033[0;31mCan't find \"~/.latexmkrc\".\033[0;39m"
+    echo "Please make \".latexmkrc\""
+    echo -e "For example, like this.\n"
+    example
+    exit 1
+  elif [ ! -d ${folder} ]; then
+    echo "Directory \"${folder}\" doesn't seem to exist."
+    echo "Please specify the folder as the Command Line Arguments."
+    exit 1
+  else
+    if [ ! -f ${file} ]; then
+      echo -e "\033[0;32mCoping from template file to \"${destination}\". \033[0;39m"
+      exec_cmd "/bin/cp ${template} ${destination}"
+    fi
+    echo -e "\033[0;32mLaunching \"latexmk -pvc ${file}\". \033[0;39m"
+    exec_latex ${folder} ${file} ${destination}
+  fi
+fi
