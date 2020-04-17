@@ -1,0 +1,11 @@
+[Unit]
+Description=Recording A&G and radiko programs
+After=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /path/to/radio_rec.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
