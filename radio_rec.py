@@ -11,14 +11,14 @@ def rec_agqr(url, time, name):
     rtmpdump = "/usr/bin/rtmpdump"
     ffmpeg = "/usr/bin/ffmpeg"
     today = datetime.datetime.now().strftime('%Y%m%d')
-    print("{}: {}の録音を開始します...".format(datetime.datetime.now().strftime('%Y/%m/%d %H:%M', name)))
+    print("{}: {}の録音を開始します...".format(datetime.datetime.now().strftime('%Y/%m/%d %H:%M'), name))
     p1 = subprocess.Popen([rtmpdump, "-v", "-r", url, "-m", "60", "-B", str(time), "-o", "-"], stdout = subprocess.PIPE, stderr= subprocess.DEVNULL)
     p2 = subprocess.Popen([ffmpeg, "-y", "-i", "-", "{}-{}.mp4".format(name, today)], stdin = p1.stdout, stderr = subprocess.DEVNULL)
     p2.communicate()
 
 def rec_radiko(name, station, duration):
     radigo = "/usr/local/bin/go/bin/radigo"
-    print("{}: {}の録音を開始します...".format(datetime.datetime.now().strftime('%Y/%m/%d %H:%M', name)))
+    print("{}: {}の録音を開始します...".format(datetime.datetime.now().strftime('%Y/%m/%d %H:%M'), name))
     subprocess.call([radigo, "rec-live", "-id={}".format(station), "-t={}".format(duration), "-o=mp3"])
 
 if __name__ == '__main__':
