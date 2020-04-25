@@ -18,8 +18,10 @@ def rec_agqr(url, time, name):
 
 def rec_radiko(name, station, duration):
     radigo = "/usr/local/bin/go/bin/radigo"
-    print("{}: {}の録音を開始します...".format(datetime.datetime.now().strftime('%Y/%m/%d %H:%M'), name))
-    subprocess.call([radigo, "rec-live", "-id={}".format(station), "-t={}".format(duration), "-o=mp3"])
+    today = datetime.date.now()
+    start = today - datetime.timedelta(second=duration)
+    print("{}: {}の録音を開始します...".format(today.strftime('%Y/%m/%d %H:%M'), name))
+    subprocess.call([radigo, "rec", "-id={}".format(station), "-s={}".format(start.strftime('%Y/%m/%d%H%M:%S')), "-o=mp3"])
 
 if __name__ == '__main__':
     json_path = "/home/hsrmy/bin/program.json"

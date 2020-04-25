@@ -12,12 +12,19 @@
             "cation": "24:00〜29:00の間は, 次の日の0:00〜5:00にする",
             "name": "番組名",
             "station": "放送局。超!A&G+はagqr, radiko対象局はその局のコード(TOKYO FMはFMT, 文化放送はQRR, ...)",
-            "start": "番組録音開始時刻(遅延を考慮して番組開始時刻の1分前にしておくといいかも)",
+            "start": "番組録音開始時刻(超!A&G+は番組開始時刻の1分前, radiko対象局は番組終了1分後とする)",
             "minute": "放送時間(秒)",
             "key": "スクリプト回すとき時に使用"
         }
     },
     "0": [
+        {
+            "name": "水樹奈々 スマイルギャング",
+            "station": "QRR",
+            "start": "00:01",
+            "minute": 1860,
+            "key": "msg"
+        },
         {
             "name": "思春期が終わりません！！",
             "station": "agqr",
@@ -28,7 +35,7 @@
         {
             "name": "水樹奈々のMの世界",
             "station": "FMT",
-            "start": "20:59",
+            "start": "21:31",
             "minute": 1860,
             "key": "nana_m"
         }
@@ -79,7 +86,7 @@
         {
             "name": "MOMO・SORA・SHIINA Talking Box",
             "station": "QRR",
-            "start": "01:59",
+            "start": "02:31",
             "minute": 1860,
             "key": "mss"
         },
@@ -96,13 +103,6 @@
             "start": "17:59",
             "minute": 1860,
             "key": "mode"
-        },
-        {
-            "name": "水樹奈々 スマイルギャング",
-            "station": "QRR",
-            "start": "23:29",
-            "minute": 1860,
-            "key": "msg"
         }
     ]
 }
